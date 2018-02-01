@@ -104,4 +104,9 @@ public class RegionsEntity extends BaseEntity{
         return updateByCriteria("DELETE FROM regions WHERE region_id = " +
         String.valueOf(id)) > 0;
     }
+
+    public boolean delete(String name){
+        return updateByCriteria("DELETE FROM regions WHERE region_name = '" +
+                name + "'") > 0;
+    }
 }
