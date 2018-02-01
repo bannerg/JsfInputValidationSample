@@ -76,13 +76,32 @@ public class RegionsEntity extends BaseEntity{
                 return getConnection()
                         .createStatement()
                         .executeUpdate(sql);
-                
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-
         return 0;
     }
 
+    public Region create(String name){
+        if (findByName(name) == null){
+            if (getConnection() != null){
+                String sql = "INSERT INTO regions(region_id, region_name) " +
+                        "VALUES(" + String.valueOf(getMaxId() + 1) + ", '" +
+                        name + "')";
+                int results = updateByCriteria(sql);
+                if (results > 0){
+                    Region region = new Region(getMaxId(), name);
+                    return region;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean delete(int id){
+        return updateByCriteria("DELETE FROM regions WHERE region_id = " +
+        String.valueOf(id)) > 0;
+    }
 }
