@@ -31,11 +31,11 @@ public class RegionsEntity extends BaseEntity{
         }
         return regions;
     }
-
+//    Find All Method
     public List<Region> findAll(){
         return findByCriteria(DEFAULT_SQL);
     }
-
+//    Find by Id Method
     public Region findById(int id){
         List<Region> regions = findByCriteria(
                 DEFAULT_SQL +
@@ -44,4 +44,45 @@ public class RegionsEntity extends BaseEntity{
         );
         return (regions != null ? regions.get(0) : null);
     }
+//    Find by Name Method
+    public Region findByName(String name){
+        List<Region> regions = findByCriteria(
+                DEFAULT_SQL +
+                        "WHERE region_name = " +
+                        name
+        );
+        return (regions != null ? regions.get(0) : null);
+    }
+
+    private int getMaxId(){
+        String sql = "SELECT MAX(id) AS max_id FROM regions";
+        if (getConnection() != null){
+            try {
+                ResultSet resultSet = getConnection()
+                        .createStatement()
+                        .executeQuery(sql);
+                return resultSet.next() ?
+                        resultSet.getInt("max_id") : 0;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    private int updateByCriteria(String sql){
+        if (getConnection() != null){
+            try {
+                return getConnection()
+                        .createStatement()
+                        .executeUpdate(sql);
+                
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+
 }
