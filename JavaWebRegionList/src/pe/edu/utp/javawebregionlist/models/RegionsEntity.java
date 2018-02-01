@@ -53,7 +53,7 @@ public class RegionsEntity extends BaseEntity{
         );
         return (regions != null ? regions.get(0) : null);
     }
-
+//    Find MaxId
     private int getMaxId(){
         String sql = "SELECT MAX(id) AS max_id FROM regions";
         if (getConnection() != null){
@@ -69,7 +69,7 @@ public class RegionsEntity extends BaseEntity{
         }
         return 0;
     }
-
+//    General Method to executeUpdate
     private int updateByCriteria(String sql){
         if (getConnection() != null){
             try {
@@ -83,7 +83,7 @@ public class RegionsEntity extends BaseEntity{
         }
         return 0;
     }
-
+//    Create region
     public Region create(String name){
         if (findByName(name) == null){
             if (getConnection() != null){
@@ -99,14 +99,20 @@ public class RegionsEntity extends BaseEntity{
         }
         return null;
     }
-
+//    Delete by Id
     public boolean delete(int id){
         return updateByCriteria("DELETE FROM regions WHERE region_id = " +
         String.valueOf(id)) > 0;
     }
-
+//    Delete by Name
     public boolean delete(String name){
         return updateByCriteria("DELETE FROM regions WHERE region_name = '" +
                 name + "'") > 0;
+    }
+//    Update by Region Object
+    public boolean update(Region region){
+        return updateByCriteria("UPDATE regions " +
+                "SET region_name = '" + region.getName() + "' " +
+                "WHERE region_id = "+ String.valueOf(region.getId())) > 0;
     }
 }
