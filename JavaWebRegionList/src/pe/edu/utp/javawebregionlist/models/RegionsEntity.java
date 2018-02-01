@@ -44,6 +44,4 @@ public class RegionsEntity extends BaseEntity{
         );
         return (regions != null ? regions.get(0) : null);
     }
-
-
 }
