@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <a href="regions">Show Region List</a>
   </body>
 </html>

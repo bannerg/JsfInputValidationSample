@@ -61,16 +61,51 @@ public class RegionsController extends HttpServlet {
         if (action.equalsIgnoreCase("index")) {
             List<Region> regions = service.findAllRegions();
             request.setAttribute("regions",regions);
-            url = "listRegion.jsp";
-
+            url = "listRegions.jsp";
         }
 //        action = show, method = Get
-        if (action.equalsIgnoreCase("index"))
-//        action = new, method = Get
+        if (action.equalsIgnoreCase("show")) {
+            int id = Integer.parseInt(
+                    request
+                    .getParameter("id")
+            );
+            request.setAttribute("region", service.findRegionById(id));
+        }
+//        action = new, method = Post
+        if (action.equalsIgnoreCase("new")) {
+            url = "newRegion.jsp";
+        }
 //        action = create, method = Post
+        if (action.equalsIgnoreCase("create")) {
+            String name = request
+                    .getParameter("name");
+            Region region = service.createRegion(name);
+            request.setAttribute("region", service.findAllRegions());
+            url = "listRegions.jsp";
+        }
 //        action = edit, method = Post
-//        action = delete, method = Post
+        if (action.equalsIgnoreCase("edit")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            request.setAttribute("region", service.findRegionById(id));
+            url = "editRegion.jsp";
+        }
+//        action = delete, method = Get
+        if (action.equalsIgnoreCase("delete")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            boolean result = service.deleteRegion(id);
+            request.setAttribute("region", service.findAllRegions());
+            url = "listRegions.jsp";
+        }
 //        action = update, method = Post
-
+        if (action.equalsIgnoreCase("update")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            Region region = new Region(id,name);
+            boolean result = service.updateRegion(region);
+            request.setAttribute("region", service.findAllRegions());
+            url = "listRegions.jsp";
+        }
+        //Enviamos los registros
+        request.getRequestDispatcher(url).forward(request,response);
     }
 }
