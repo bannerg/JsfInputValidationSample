@@ -40,4 +40,14 @@ public class HrService {
         return getRegionsEntity() != null ?
                 getRegionsEntity().create(name) : null;
     }
+
+    public boolean deleteRegion(int id){
+        return getRegionsEntity() != null ?
+                getRegionsEntity().delete(id) : false;
+    }
+
+    public boolean updateRegion(Region region){
+        return getRegionsEntity() != null ?
+                getRegionsEntity().update(region) : false;
+    }
 }
