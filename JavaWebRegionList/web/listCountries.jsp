@@ -1,14 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrador
-  Date: 03/02/2018
-  Time: 21:17
+  Date: 10/02/2018
+  Time: 21:18
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Edit Region</title>
+    <title>Countries</title>
 </head>
 <body>
         <h1>List Countries</h1>
@@ -16,20 +17,20 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Actions</th>
             </tr>
-            <c:forEach var="country" items="${countries}">
+            <c:forEach var="country" items="${request.countries}">
                 <tr>
                     <td>
-                        <a href="regions?action=show&id=${country.id}">
                             <c:out value="${country.id}"/>
-                        </a>
                     </td>
+                    <td><c:out value="${country.name}"/></td>
                     <td>
-                        <c:out value="${country.name}"/>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-        <p><a href="regions?action=new">Create</a></p>
+        <p><a href="regions">Region List</a></p>
+
 </body>
 </html>

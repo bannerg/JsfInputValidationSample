@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Regiones</title>
   </head>
   <body>
   <a href="regions">Show Region List</a>

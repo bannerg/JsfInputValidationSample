@@ -30,6 +30,7 @@
                 <td>
                     <a href="regions?action=edit&id=${region.id}">Edit</a>
                     <a href="regions?action=delete&id=${region.id}">Delete</a>
+                    <a href="regions?action=showCountries&id=${region.id}&name=${region.name}">Show Countries</a>
                 </td>
             </tr>
         </c:forEach>

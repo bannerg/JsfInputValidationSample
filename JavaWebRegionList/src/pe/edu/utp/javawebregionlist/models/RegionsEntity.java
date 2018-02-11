@@ -22,12 +22,11 @@ public class RegionsEntity extends BaseEntity{
                     Region region = new Region()
                             .setId(resultSet.getInt("region_id"))
                             .setName(resultSet.getString("region_name"));
+                    regions.add(region);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
         }
         return regions;
     }
@@ -35,27 +34,9 @@ public class RegionsEntity extends BaseEntity{
     public List<Region> findAll(){
         return findByCriteria(DEFAULT_SQL);
     }
-//    Find by Id Method
-    public Region findById(int id){
-        List<Region> regions = findByCriteria(
-                DEFAULT_SQL +
-                        "WHERE region_id = " +
-                        String.valueOf(id)
-        );
-        return (regions != null ? regions.get(0) : null);
-    }
-//    Find by Name Method
-    public Region findByName(String name){
-        List<Region> regions = findByCriteria(
-                DEFAULT_SQL +
-                        "WHERE region_name = " +
-                        name
-        );
-        return (regions != null ? regions.get(0) : null);
-    }
-//    Find MaxId
+    //    Find MaxId
     private int getMaxId(){
-        String sql = "SELECT MAX(id) AS max_id FROM regions";
+        String sql = "SELECT MAX(region_id) AS max_id FROM regions";
         if (getConnection() != null){
             try {
                 ResultSet resultSet = getConnection()
@@ -68,6 +49,24 @@ public class RegionsEntity extends BaseEntity{
             }
         }
         return 0;
+    }
+    //    Find by Id Method
+    public Region findById(int id){
+        List<Region> regions = findByCriteria(
+                DEFAULT_SQL +
+                        "WHERE region_id = " +
+                        String.valueOf(id)
+        );
+        return ((regions.isEmpty()) ? null : regions.get(0));
+    }
+    //    Find by Name Method
+    public Region findByName(String name){
+        List<Region> regions = findByCriteria(
+                DEFAULT_SQL +
+                        "WHERE region_name = " +
+                        name
+        );
+        return (regions.isEmpty()) ? null : regions.get(0);
     }
 //    General Method to executeUpdate
     private int updateByCriteria(String sql){
@@ -114,5 +113,15 @@ public class RegionsEntity extends BaseEntity{
         return updateByCriteria("UPDATE regions " +
                 "SET region_name = '" + region.getName() + "' " +
                 "WHERE region_id = "+ String.valueOf(region.getId())) > 0;
+    }
+//    Find Countries of Region
+    public List<Region> findAllWithCountries(CountriesEntity countriesEntity){
+        List<Region> regions = new ArrayList();
+        regions = this.findAll();
+        for (Region region : regions){
+            region.setCountries(countriesEntity.findForRegion(region,
+                    this));
+        }
+        return regions;
     }
 }
